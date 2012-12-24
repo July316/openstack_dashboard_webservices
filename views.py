@@ -23,7 +23,17 @@ class WebService(ServiceBase):
 		}
         res = c.wic_add_user(**params)
         return res
-
+        
+    @srpc(String, String, String, _returns=AnyDict)
+    def DescribeSecurityGroup(requestId, timestamp, groupName):
+        params = {'requestId':requestId}
+        params['DescribeSecurityGroup'] = {
+		'timestamp':timestamp,
+		'groupName':groupName,
+		}
+        res = c.wic_secgroup_show(**params)
+        return res
+        
 soap_services = csrf_exempt(DjangoApplication(Application([WebService],
         'soap.services',
         in_protocol=Soap11(),
