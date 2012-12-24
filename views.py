@@ -33,6 +33,17 @@ class WebService(ServiceBase):
 		}
         res = c.wic_secgroup_show(**params)
         return res
+                
+    @srpc(String, String, String, String,  _returns=AnyDict)
+    def StopHost(requestId, trancetionId, instanceId, timestamp):
+        params = {'requestId':requestId}
+        params['StopHost'] = {
+        	'trancetionId':trancetionId,
+		'timestamp':timestamp,
+		'groupName':groupName,
+		}
+        res = c.wic_stop_host(**params)
+        return res
         
 soap_services = csrf_exempt(DjangoApplication(Application([WebService],
         'soap.services',
