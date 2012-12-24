@@ -45,6 +45,75 @@ class WebService(ServiceBase):
         res = c.wic_stop_host(**params)
         return res
         
+    @srpc(String, String, String, String, _returns=AnyDict)
+    def DelHost(requestId, trancetionId, instanceId, timestamp):
+        params = {'requestId':requestId}
+        params['DelHost'] = {
+        	'trancetionId':trancetionId,
+		'instanceId':instanceId,
+		'timestamp':timestamp,
+		}
+        res = c.wic_del_host(**params)
+        return res
+        
+    @srpc(String, String, String, String, String, _returns=AnyDict)
+    def CreateDisk(requestId, trancetionId, instanceId, timestamp, disk):
+        params = {'requestId':requestId}
+        params['CreateDisk'] = {
+        	'trancetionId':trancetionId,
+		'instanceId':instanceId,
+		'timestamp':timestamp,
+		'disk':disk,
+		}
+        res = c.wic_create_disk(**params)
+        return res
+        
+    @srpc(String, String, String, String, String, String,  _returns=AnyDict)
+    def BindDisk(requestId, trancetionId, instanceId, volumeId, ostype, timestamp):
+        params = {'requestId':requestId}
+        params['BindDisk'] = {
+        	'trancetionId':trancetionId,
+		'instanceId':instanceId,
+		'volumeId':volumeId,
+		'ostype':ostype,
+		'timestamp':timestamp,
+		}
+        res = c.wic_bind_disk(**params)
+        return res
+        
+    @srpc(String, String, String, String,  _returns=AnyDict)
+    def DelDisk(requestId, trancetionId, volumeId, timestamp):
+        params = {'requestId':requestId}
+        params['DelDisk'] = {
+        	'trancetionId':trancetionId,
+		'volumeId':volumeId,
+		'timestamp':timestamp,
+		}
+        res = c.wic_del_disk(**params)
+        return res
+        
+    @srpc(String, String, String, String,  _returns=AnyDict)
+    def RestartHost(requestId, trancetionId, instanceId, timestamp):
+        params = {'requestId':requestId}
+        params['DelDisk'] = {
+        	'trancetionId':trancetionId,
+		'instanceId':instanceId,
+		'timestamp':timestamp,
+		}
+        res = c.wic_restar_host(**params)
+        return res
+        
+    @srpc(String, String, String, String,  _returns=AnyDict)
+    def ShutdownHostService(requestId, trancetionId, instanceId, timestamp):
+        params = {'requestId':requestId}
+        params['DelDisk'] = {
+        	'trancetionId':trancetionId,
+		'instanceId':instanceId,
+		'timestamp':timestamp,
+		}
+        res = c.wic_shutdown_hostservice(**params)
+        return res
+        
 soap_services = csrf_exempt(DjangoApplication(Application([WebService],
         'soap.services',
         in_protocol=Soap11(),
