@@ -114,6 +114,17 @@ class WebService(ServiceBase):
         res = c.wic_shutdown_hostservice(**params)
         return res
         
+    @srpc(String, String, String, String, _returns=AnyDict)
+    def CreateSecurityGroup(requestId, trancetionId, timestamp, groupSize):
+        params = {'requestId':requestId}
+        params['CreateSecurityGroup'] = {
+                'trancetionId':trancetionId,
+                'timestamp':timestamp,
+                'groupSize':groupSize,
+                }
+        res = c.wic_create_securitygroup(**params)
+        return res
+        
 soap_services = csrf_exempt(DjangoApplication(Application([WebService],
         'soap.services',
         in_protocol=Soap11(),
